@@ -1,12 +1,15 @@
-#!/bin/bash
-
-minikube start --vm-driver=virtualbox --cpus 3 --memory=3000
-
-docker pull metallb/speaker:v0.8.2
-docker pull metallb/controller:v0.8.2
+kubectl delete svc mysql-svc
+kubectl delete svc ftps-svc
+kubectl delete svc nginx-svc
+kubectl delete svc phpmyadmin
+kubectl delete svc wordpress-svc
+kubectl delete svc cip-influxdb
+kubectl delete svc influxdb-svc
+kubectl delete svc grafana-svc
+kubectl delete deployments --all
 
 eval $(minikube docker-env)
-minikube addons enable metallb
+#minikube addons enable metallb
 kubectl apply -f ./srcs/configmap.yaml
 
 #nginx
@@ -29,9 +32,11 @@ kubectl apply -f ./srcs/mysql/mysql.yaml
 docker build -t ftps_image ./srcs/ftps
 kubectl apply -f ./srcs/ftps/ftps.yaml
 
+
 #telegraf
 docker build -t telegraf_image ./srcs/telegraf
 kubectl apply -f ./srcs/telegraf/telegraf.yaml
+
 
 #influxdb
 docker build -t influxdb_image ./srcs/influxdb

@@ -1,0 +1,4 @@
+CREATE DATABASE wordpress;
+CREATE USER 'edread'@'%' IDENTIFIED BY 'root';
+GRANT ALL PRIVILEGES ON wordpress.* TO 'edread'@'%';
+FLUSH PRIVILEGES;
